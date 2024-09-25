@@ -1,0 +1,12 @@
+a.decor { 
+    text-decoration: none;
+    color: black;
+    /* color: blue; */
+    
+}
+
+a:hover {
+    color: rgb(233, 34, 34);
+
+} 
+
