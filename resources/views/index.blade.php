@@ -11,6 +11,24 @@
 </head>
 <body>
 
+    @if(Session::has('success'))
+        <div class="alert alert-success">{{Session::get('success') }}</div>
+
+    @elseif(Session::has('success2'))
+        <div class="alert alert-info">{{ Session::get('success2') }}</div>
+
+    @elseif(Session::has('deleted'))
+        <div class="alert alert-danger">{{ Session::get('deleted') }}</div>
+
+    @endif
+
+
+    <form action="{{ route('buku.search') }}" method="GET">
+   
+        <input type="text" name="keyword" class="form-control" placeholder="Cari..." style="width: 30%; display:inline; margin-top:10px 0; float:right;">
+        <button type="submit" class="btn btn-dark" style="float: right">Cari</button>
+    </form>
+
     <table class="table table-striped table-hover">
         <thead>
             <tr>
@@ -22,10 +40,13 @@
                 <th>Delete</th>
             </tr>
         </thead>
+        @yield('content')
+
         <tbody>
-            @foreach ($data_buku as $buku)
+            
+            @foreach ($data_buku as $index => $buku)
             <tr>
-                <td>{{ $buku->id }}</td>
+                <td>{{ $index + 1 }}</td>
                 <td><a class="decor" href="{{ route('buku.show', $buku->id) }}">{{ $buku->judul }}</a></td>
                 <td>{{ $buku->penulis }}</td>
                 <td>{{ "Rp. ".number_format($buku->harga, 2, ',', '.') }}</td>
@@ -54,8 +75,20 @@
         </tbody>
     </table>
 
+    <div>{{ $data_buku->links() }}</div>
+
+
     <!-- Form Tambah Buku -->
     <div class="container mt-5">
+
+        @if(count($errors) > 0 )
+            <ul class="alert alert-danger">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        @endif
+
         <h2>Tambah Buku</h2>
         <form action="{{ route('buku.store') }}" method="POST" enctype="multipart/form-data" class="row g-3">
             @csrf

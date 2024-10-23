@@ -11,7 +11,7 @@ class Buku extends Model
 
     use HasFactory;
     protected $table = 'books';
-
+    protected $dates = 'tgl_terbit';
     use HasFactory;
 
     // Izinkan mass assignment untuk atribut-atribut ini
@@ -21,8 +21,5 @@ class Buku extends Model
         'tgl_terbit', 
         'harga', 
         'gambar'
-    ];
-
-
-    
+    ]; 
 }
